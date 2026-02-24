@@ -97,20 +97,21 @@ const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ─── HAMBURGER (mobile nav) ───
-const hamburger = document.querySelector(".nav-hamburger");
+const hamburger = document.getElementById("menu");
 const navLinks = document.querySelector(".nav-links");
 if (hamburger && navLinks) {
   hamburger.addEventListener("click", () => {
-    const isOpen = navLinks.style.display === "flex";
-    navLinks.style.display = isOpen ? "none" : "flex";
-    navLinks.style.flexDirection = "column";
-    navLinks.style.position = "absolute";
-    navLinks.style.top = "70px";
-    navLinks.style.left = "0";
-    navLinks.style.right = "0";
-    navLinks.style.background = "rgba(26,26,20,0.98)";
-    navLinks.style.padding = "20px 24px";
-    navLinks.style.gap = "20px";
-    navLinks.style.borderBottom = "1px solid rgba(201,168,76,0.15)";
+    const isOpen = navLinks.classList.toggle("open");
+    hamburger.classList.toggle("open", isOpen);
+    hamburger.setAttribute("aria-expanded", isOpen);
+  });
+
+  // Close nav when a link is clicked
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      hamburger.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", false);
+    });
   });
 }
